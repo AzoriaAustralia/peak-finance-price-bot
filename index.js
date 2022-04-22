@@ -2,7 +2,6 @@ const { Client, Intents, Channel } = require('discord.js');
 const dataUpdater = require('./dataUpdater');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const { MessageEmbed } = require('discord.js');
-import("./dataUpdater.js");
 import("./commandRegister.js");
 require('dotenv').config();
 
