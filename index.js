@@ -15,7 +15,9 @@ for (const file of commandFiles) {
 
 client.on('ready', () => {
   console.log(`Server Started as ${client.user.tag}!`);
+  client.user.setActivity('The Peg', { type: 'WATCHING' });
 });
+
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
