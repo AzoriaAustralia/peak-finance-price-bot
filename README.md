@@ -1,4 +1,4 @@
-![Azoria Logo](https://azoria.com.au/assets/logos/Logo-small-transparent.png)
+![Azoria Logo](https://azoria.com.au/assets/logos/Logo-large-crop.png)
 
 
 
