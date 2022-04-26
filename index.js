@@ -2,7 +2,7 @@ const { Client, Intents, Channel, Collection } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const { MessageEmbed } = require('discord.js');
 const { discordToken } = require('./config.json');
-import("./commandRegister.js");
+require("./commandRegister.js");
 const fs = require('node:fs');
 
 
