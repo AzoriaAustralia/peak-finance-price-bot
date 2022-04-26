@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const { ethers, BigNumber } = require("ethers");
+const ethers= require("ethers");
 const Treasury = require('./abi/Treasury.json');
 
 const provider = new ethers.providers.WebSocketProvider('wss://andromeda-ws.metis.io/', 1088);
