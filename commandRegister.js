@@ -12,7 +12,9 @@ const commands = [
   { name: 'peak',
     description: 'Show $Peak Details'},
   { name: 'pro',
-    description: "Show $Pro Details"}
+    description: "Show $Pro Details"},
+  { name: 'liquidity',
+    description: 'Show liquidity pool details'}
   ]; 
 
 const rest = new REST({ version: '9' }).setToken(process.env.bot_token);
