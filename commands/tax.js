@@ -1,29 +1,38 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const dataUpdater = require('../dataUpdater');
+const Peak = require('./abi/Peak.json');
+const Pro = require('./abi/Pro.json');
+const ethers = require("ethers");
+
+const provider = new ethers.providers.WebSocketProvider('wss://andromeda-ws.metis.io/', 1088);
+
+const peak = new ethers.Contract(Peak.address, Peak.abi, provider);
+const pro = new ethers.Contract(Pro.address, Pro.abi, provider);
+
+async function proFee(){
+    let fee = await pro.maxFeeAmount()
+    let proFee = Number.parseInt(ethers.utils.formatEther(fee));
+    return proFee > 0 ? "ON" : "OFF"
+};
+
+async function peakFee() {
+    let tax = await peak.taxRate().then(tax => ethers.utils.formatUnits(tax, 'wei'));
+    tax = Number.parseFloat(tax)/100;
+    return tax;
+};
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('tax')
-		.setDescription('Shows tax status and details'),
-	async execute(interaction) {
-        let result;
-        let peg = Number(dataUpdater.peak['pair']['priceNative']).toFixed(2);
+    data: new SlashCommandBuilder()
+        .setName('tax')
+        .setDescription('Shows tax status and details'),
+    async execute(interaction) {
+        let peak = await peakFee();
+        let pro = await proFee()
         let taxEmbed = new MessageEmbed()
             .setColor('#04E09F')
             .setFooter({ text: 'Peak Finance', iconURL: 'https://peakfinance.io/wp-content/uploads/2022/03/Logo-medium-.png' })
-            .addField('Peg is ```' + peg + '```', 'Tax on peak is ```' + getValue(peg) + '```')
-            .addField('$Pro tax is currently ', '```OFF```', false);
-            return interaction.reply({embeds: [taxEmbed]})
-
-        function getValue(peg){
-                if (peg > 1.01){ return "0%"} else
-                if (peg > 0.90){ return "15%";} else
-                if (peg > 0.80){ return "16%";} else
-                if (peg > 0.70){ return "17%";} else
-                if (peg > 0.60){ return "18%";} else
-                if (peg >0.50){ return "19%";} else
-                if (peg < 0.50 && peg > 0){ return "20%";};
-            }
-        }       
+            .addField('$Peak Tax',  '```' + peak + '%```', false)
+            .addField('$Pro tax','```' + pro + '```', false);
+        return interaction.reply({ embeds: [taxEmbed] })
+    }
 }
