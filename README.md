@@ -1,6 +1,6 @@
 ![Azoria Logo](https://azoria.com.au/assets/logos/github_logo.png)
 
-
+*If this code is used elsewhere than [Peak Finance](https://peakfinance.io) please ensure you mention **Azoria** in your fork.*
 
 **Azoria** provide's custom software and development solutions to cryptocurrency projects and alike. Including but not limited to:
 - Frontend Web Design
