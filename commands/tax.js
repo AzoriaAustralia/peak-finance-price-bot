@@ -18,11 +18,11 @@ const pro = new ethers.Contract(Pro.address, Pro.abi, provider);
 //     return proFee > 0 ? "ON" : "OFF"
 // };
 
-async function peakFee() {
-    let tax = await peak.taxRate().then(tax => ethers.utils.formatUnits(tax, 'wei'));
-    tax = Number.parseFloat(tax)/100;
-    return tax;
-};
+// async function peakFee() {
+//     let tax = await peak.taxRate().then(tax => ethers.utils.formatUnits(tax, 'wei'));
+//     tax = Number.parseFloat(tax)/100;
+//     return tax;
+// };
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -30,13 +30,14 @@ module.exports = {
         .setDescription('Shows tax status and details'),
     async execute(interaction) {
         // proFee()
-        let peak = await peakFee();
+        // let peak = await peakFee();
         // let pro = await proFee()
-        let taxEmbed = new MessageEmbed()
-            .setColor('#04E09F')
-            .setFooter({ text: 'Peak Finance', iconURL: 'https://peakfinance.io/wp-content/uploads/2022/03/Logo-medium-.png' })
-            .addField('$Peak Tax',  '```' + peak + '%```', false)
-            .addField('$Pro tax','```' + 'Exp0logy broke this!' + '```', false);
-        return interaction.reply({ embeds: [taxEmbed] })
+        // let taxEmbed = new MessageEmbed()
+        //     .setColor('#04E09F')
+        //     .setFooter({ text: 'Peak Finance', iconURL: 'https://peakfinance.io/wp-content/uploads/2022/03/Logo-medium-.png' })
+        //     .addField('$Peak Tax',  '```' + peak + '%```', false)
+        //     .addField('$Pro tax','```' + 'Exp0logy broke this!' + '```', false);
+        // return interaction.reply({ embeds: [taxEmbed] });
+        return interaction.reply('Command hsa been removed until further notice.');
     }
 }
