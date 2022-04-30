@@ -2,42 +2,30 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const Peak = require('./abi/Peak.json');
 const Pro = require('./abi/Pro.json');
-const ethers = require("ethers");
+const dataUpdater = require('../dataUpdater');
 
-const provider = new ethers.providers.WebSocketProvider('wss://andromeda-ws.metis.io/', 1088);
-
-const peak = new ethers.Contract(Peak.address, Peak.abi, provider);
-const pro = new ethers.Contract(Pro.address, Pro.abi, provider);
-
-// async function proFee(){
-//     let fee1 = await pro.treasuryRate().then(tax => ethers.BigNumber.toString(tax));
-//     let fee2 = await pro.buybackRate().then(tax => ethers.utils.formatUnits(tax, 'gwei'));
-//     console.log(fee1);
-//     console.log(fee2);
-//     let proFee = Number.parseInt(ethers.utils.formatEther(fee));
-//     return proFee > 0 ? "ON" : "OFF"
-// };
-
-// async function peakFee() {
-//     let tax = await peak.taxRate().then(tax => ethers.utils.formatUnits(tax, 'wei'));
-//     tax = Number.parseFloat(tax)/100;
-//     return tax;
-// };
+function getRate(peg) {
+    if(peg >= 1.1){return 0} else
+    if(peg >= 0.9){return 15} else
+    if(peg >= 0.8){return 16} else
+    if(peg >= 0.7){return 17} else
+    if(peg >= 0.6){return 18} else
+    if(peg >= 0.5){return 19} else
+    if(peg >= 0){return 20}
+}
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('tax')
         .setDescription('Shows tax status and details'),
     async execute(interaction) {
-        // proFee()
-        // let peak = await peakFee();
-        // let pro = await proFee()
-        // let taxEmbed = new MessageEmbed()
-        //     .setColor('#04E09F')
-        //     .setFooter({ text: 'Peak Finance', iconURL: 'https://peakfinance.io/wp-content/uploads/2022/03/Logo-medium-.png' })
-        //     .addField('$Peak Tax',  '```' + peak + '%```', false)
-        //     .addField('$Pro tax','```' + 'Exp0logy broke this!' + '```', false);
-        // return interaction.reply({ embeds: [taxEmbed] });
-        return interaction.reply('Command hsa been removed until further notice.');
+        let peg = Number.parseFloat(dataUpdater.peak['pair']['priceNative']);
+        let peakTaxRate = getRate(peg);
+        let taxEmbed = new MessageEmbed()
+            .setColor('#04E09F')
+            .setFooter({ text: 'Peak Finance', iconURL: 'https://peakfinance.io/wp-content/uploads/2022/03/Logo-medium-.png' })
+            .addField('$Peak Tax', '```' + peakTaxRate + '%```', false)
+            .addField('$Pro tax', '```' + (peg > 1.05 ? "On" : "Off") + '```', false);
+        return interaction.reply({ embeds: [taxEmbed] });
     }
 }
