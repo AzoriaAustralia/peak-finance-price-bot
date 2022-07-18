@@ -17,7 +17,8 @@ module.exports = {
             {name: 'Volume 24 Hrs', value: '```' + dataUpdater.pro['pair']['volume']['h24'].toLocaleString() + '```', inline: true},
             {name: 'Price Change 24 Hrs', value: '```' + dataUpdater.pro['pair']['priceChange']['h24'] + '%```', inline: true},
             {name: 'Liquidity USD', value: "```$" + liq.toLocaleString().toString() + '```', inline: true}
-          );
+          )
+          .setFooter('Data may be slightly delayed');
           interaction.reply({embeds: [peakEmbed]})
       }
 };

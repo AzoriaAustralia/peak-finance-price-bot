@@ -14,7 +14,8 @@ module.exports = {
         { name: '\u200B', value: '\u200B' },
         {name: 'Pro USD', value: '```$' + dataUpdater.pro['pair']['priceUsd'] + '```', inline: true},
         {name: 'Pro Metis', value: '```' + dataUpdater.pro['pair']['priceNative'] + '```', inline: true},
-      );
+      )
+      .setFooter('Data may be slightly delayed');
     interaction.reply({embeds: [priceEmbed]})
 	}
 };

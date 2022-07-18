@@ -9,7 +9,7 @@ async function updateData () {
   Object.assign(module.exports, { peak: peak.data, pro: pro.data })
 }
 
-setInterval(updateData, 5000);
+setInterval(updateData, 10000);
 
 module.exports = {
   peak: null,

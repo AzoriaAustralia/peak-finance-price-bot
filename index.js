@@ -8,6 +8,7 @@ const fs = require('node:fs');
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
+
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.data.name, command);
@@ -33,6 +34,13 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
+
+function updatePeg() {
+	const channel = client.channels.fetch('998473980409298964')
+	console.log(channel);
+}
+
+setInterval(updatePeg(), 15000);
 
 
 client.login(discordToken);
