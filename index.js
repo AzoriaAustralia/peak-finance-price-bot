@@ -37,7 +37,7 @@ client.on('interactionCreate', async interaction => {
 });
 
 function updatePeg() {
-	let guild = client.guilds.fetch( guildId );
+	let guild = client.guilds.fetch(`${guildId}`);
     let channel = guild.channels.fetch('998473980409298964')
     console.log(channel)
 };
