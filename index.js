@@ -3,6 +3,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const { discordToken } = require('./config.json');
 require("./commandRegister.js");
 const fs = require('node:fs');
+const dataUpdater = require('../dataUpdater');
 
 
 client.commands = new Collection();
@@ -37,8 +38,8 @@ client.on('interactionCreate', async interaction => {
 
 function updatePeg() {
 	const channel = client.channels.fetch('998473980409298964')
-	console.log(channel);
-}
+	channel.edit({ name: channel.name + ' ' + dataUpdater.peak['pair']['priceNative']})
+};
 
 setInterval(updatePeg, 15000);
 
