@@ -1,6 +1,6 @@
 const { Client, Intents, Channel, Collection } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-const { discordToken } = require('./config.json');
+const { discordToken, guildId } = require('./config.json');
 require("./commandRegister.js");
 const fs = require('node:fs');
 const dataUpdater = require('./dataUpdater');
@@ -37,8 +37,9 @@ client.on('interactionCreate', async interaction => {
 });
 
 function updatePeg() {
-	const channel = client.channels.fetch('998473980409298964')
-	channel.edit({ name: channel.name + ' ' + dataUpdater.peak['pair']['priceNative']})
+	let guild = client.guilds.get( guildId );
+    let channel = guild.channels.get('998473980409298964')
+    console.log(channel)
 };
 
 setInterval(updatePeg, 15000);
