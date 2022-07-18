@@ -16,7 +16,7 @@ module.exports = {
         let contractEmbed = new MessageEmbed().setFooter({ text: 'Peak Finance', iconURL: 'https://peakfinance.io/wp-content/uploads/2022/03/Logo-medium-.png' }).setColor('#04E09F')
           .addField('Last Hour TWAP', '```' + Twap + '```', true)
           .addField('Current Epoch', '```' + await treasury.epoch() + '```', true)
-          .setFooter('Data may be slightly delayed')
+          .setFooter('Data may be slightly delayed');
         return interaction.reply({embeds: [contractEmbed]})
     }
 };
