@@ -25,8 +25,8 @@ module.exports = {
             .setColor('#04E09F')
             .setFooter({ text: 'Peak Finance', iconURL: 'https://peakfinance.io/wp-content/uploads/2022/03/Logo-medium-.png' })
             .addField('$Peak Tax', '```' + peakTaxRate + '%```', false)
-            .addField('$Pro tax', '```' + (peg >= 1.05 ? "On" : "Off") + '```', false);
-            .setFooter('Data may be slightly delayed')
+            .addField('$Pro tax', '```' + (peg >= 1.05 ? "On" : "Off") + '```', false)
+            .setFooter('Data may be slightly delayed');
         return interaction.reply({ embeds: [taxEmbed] });
     }
 }
