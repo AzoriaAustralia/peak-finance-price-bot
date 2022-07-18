@@ -40,7 +40,7 @@ function updatePeg() {
 	console.log(channel);
 }
 
-setInterval(updatePeg(), 15000);
+setInterval(updatePeg, 15000);
 
 
 client.login(discordToken);
