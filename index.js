@@ -3,7 +3,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const { discordToken } = require('./config.json');
 require("./commandRegister.js");
 const fs = require('node:fs');
-const dataUpdater = require('../dataUpdater');
+const dataUpdater = require('./dataUpdater');
 
 
 client.commands = new Collection();
