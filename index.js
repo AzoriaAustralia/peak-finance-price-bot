@@ -6,7 +6,11 @@ const { discordToken, guildId } = require("./config.json");
 require("./commandRegister.js");
 const fs = require("node:fs");
 const dataUpdater = require("./dataUpdater");
-
+const ethers = require('ethers');
+const data = require('./lpcontract.json');
+let provider = new ethers.providers.WebSocketProvider('wss://andromeda-ws.metis.io', 1088);
+let abi = ["event Swap(address indexed sender,uint amount0In, uint amount1In, uint amount0Out, uint amount1Out, address indexed to)"]
+let contract = new ethers.Contract(data.address, abi, provider)
 client.commands = new Collection();
 const commandFiles = fs
   .readdirSync("./commands")
@@ -40,6 +44,25 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
+let filter = {
+  topics: [
+    null,
+    "0x0000000000000000000000001e876cce41b7b844fde09e38fa1cf00f213bff56"
+  ]
+};
+
+contract.on(filter, async (event) => {
+  let transaction = await event.getTransaction()
+  let value = parseFloat(ethers.utils.formatEther(transaction.value)).toFixed(2);
+  if (value > 10) {
+    client.channels.fetch('948353607017832509').then(channel =>
+      channel.send(
+        '🚀 Peak Buy 🚀\n' + value + ' Metis'
+      ))
+  }
+});
+
+
 async function updatePeg() {
   let guild = await client.guilds.fetch(`${guildId}`);
   await guild.channels.fetch("998473980409298964").then((response) =>
@@ -57,13 +80,12 @@ async function updatePeg() {
 setInterval(updatePeg, 15000);
 
 var util = require('util');
-var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
+var log_file = fs.createWriteStream(__dirname + '/debug.log', { flags: 'w' });
 var log_stdout = process.stdout;
 
-console.log = function(d) { //
+console.log = function (d) { //
   log_file.write(util.format(d) + '\n');
   log_stdout.write(util.format(d) + '\n');
 };
-
 
 client.login(discordToken);
